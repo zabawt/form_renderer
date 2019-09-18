@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../../store';
-import FieldFactory from '../../commons/FieldFactory'
+import FieldFactory from '../../components/FieldFactory'
 import FieldLabel from '../../components/FieldLabel'
 import FormWrapper from '../../components/FormWrapper'
 import { formRenderFields } from '../../commons/types/formFields';

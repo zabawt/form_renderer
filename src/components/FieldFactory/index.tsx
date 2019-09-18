@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react';
-import { fieldTypeInputEnum, formRenderFields } from '../types/formFields'
+import { fieldTypeInputEnum, formRenderFields } from './../../commons/types/formFields';
 import { Omit } from '../../../node_modules/@types/yargs';
 
 type fieldFactoryProps = { id: string, onChange: any } & Omit<formRenderFields, "label">;

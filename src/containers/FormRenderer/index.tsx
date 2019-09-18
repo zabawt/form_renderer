@@ -4,12 +4,12 @@ import FieldFactory from '../../components/FieldFactory'
 import FieldLabel from '../../components/FieldLabel'
 import FormWrapper from '../../components/FormWrapper'
 import { formRenderFields } from '../../commons/types/formFields';
-import { actionTypes, Action } from '../../commons/types/actions';
+import { actionTypes } from '../../commons/types/actions';
 
 class FormRenderer extends React.Component<any, {}> {
 
   private getFields = (): JSX.Element[] => {
-    const { state: { fields } } = this.context;
+    const { fields } = this.context.state;
     return Object.keys(fields).map(item => this.wrapWithLabel(item)({ ...fields[item] })
     )
   }

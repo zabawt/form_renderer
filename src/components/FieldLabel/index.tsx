@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface IFieldLabelProps {
   label: string;
   htmlFor: string;
-  children: any;
+  children: ReactNode;
 }
 
 const FieldLabel = ({ label, htmlFor, children }: IFieldLabelProps) => {

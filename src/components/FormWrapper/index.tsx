@@ -1,10 +1,11 @@
-import React, { SyntheticEvent } from 'react';
+import React, { ReactNode } from 'react';
+import { formSubmit } from '../../commons/types/form';
 
 interface IFormWrapperProps {
   name: string;
   id: string;
-  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => {};
-  children: any;
+  onSubmit: formSubmit;
+  children: ReactNode;
 }
 
 const FormWrapper = (props: IFormWrapperProps) => {

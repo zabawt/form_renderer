@@ -3,11 +3,11 @@ import { fieldTypeInputEnum, formRenderFields } from './../../commons/types/form
 import { Omit } from '../../../node_modules/@types/yargs';
 
 type fieldFactoryProps = { id: string, onChange: any } & Omit<formRenderFields, "label">;
-
+type onChangeEvent = SyntheticEvent<HTMLInputElement | HTMLSelectElement>;
 const FieldFactory = (props: fieldFactoryProps) => {
   const { type, onChange, ...rest } = props;
 
-  const handleOnChange = (event: SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleOnChange = (event: onChangeEvent) => {
     event.preventDefault();
     props.onChange(event.currentTarget.value);
   }

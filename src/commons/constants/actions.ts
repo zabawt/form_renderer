@@ -1,3 +1,0 @@
-export const UPDATE_FIELD_VALUE = "UPDATE_FIELD_VALUE";
-export const SET_FIELD_ERROR = "SET_FIELD_ERROR";
-export const SUBMIT_FORM = "SUBMIT_FORM";

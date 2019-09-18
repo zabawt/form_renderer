@@ -1,8 +1,11 @@
 import React from 'react';
+import { StoreProvider } from './../../store'
+import FormRenderer from '../FormRenderer';
 
 const App = () => {
   //main app container
-  return <div>App container</div>
+
+  return <StoreProvider><FormRenderer /></StoreProvider>
 
 }
 

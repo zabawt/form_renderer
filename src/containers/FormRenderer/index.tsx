@@ -1,33 +1,40 @@
 import React from 'react';
 import { AppContext } from '../../store';
-import FieldFactory from './../../commons/FieldFactory'
-import { formRenderFields } from './../../commons/types/formFields'
-import FieldLabel from './../../components/FieldLabel'
-import FormWrapper from './../../components/FormWrapper'
-
-
+import FieldFactory from '../../commons/FieldFactory'
+import FieldLabel from '../../components/FieldLabel'
+import FormWrapper from '../../components/FormWrapper'
+import { formRenderFields } from '../../commons/types/formFields';
+import { actionTypes, Action } from '../../commons/types/actions';
 
 class FormRenderer extends React.Component<any, {}> {
 
-
-  private fieldsList = () => {
-    const { fields } = this.context.state;
-    return fields.map((item: formRenderFields, key: number) => {
-      return <FieldLabel label={item.label}><FieldFactory type={item.type} /></FieldLabel>
-    })
+  private getFields = (): JSX.Element[] => {
+    const { state: { fields } } = this.context;
+    return Object.keys(fields).map(item => this.wrapWithLabel(item)({ ...fields[item] })
+    )
   }
 
-  private wrapWithValidator = () => {
-
+  private dispatchFieldUpdate = (field: string) => (value: string) => {
+    return this.context.dispatch({ type: actionTypes.UPDATE_FIELD_VALUE, payload: { name: field, value } });
   }
 
+  private wrapWithLabel = (item: string) =>
+    ({ label, type, value, name }: formRenderFields) =>
+      <FieldLabel htmlFor={name} label={label} key={item}>
+        <FieldFactory type={type} value={value} id={item} name={name} onChange={this.dispatchFieldUpdate(item)} />
+      </FieldLabel>
+
+
+  private AddValidator = () => {
+
+  }
 
   render() {
     const { formName, formId, onSubmit } = this.context.state;
-    return <FormWrapper name={formName} id={formId} onSubmit={onSubmit}>{[this.fieldsList()]}</FormWrapper>
+    return <FormWrapper name={formName} id={formId} onSubmit={onSubmit}>{this.getFields()}</FormWrapper>
   }
 }
-FormRenderer.contextType = AppContext
 
+FormRenderer.contextType = AppContext
 
 export default FormRenderer;

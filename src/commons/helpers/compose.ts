@@ -1,0 +1,1 @@
+export const compose = (...functions: Function[]) => (component: any) => functions.reduceRight((elem, fx) => fx(elem), component);

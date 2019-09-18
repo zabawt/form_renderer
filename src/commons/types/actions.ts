@@ -1,7 +1,16 @@
 export type Action = {
   type: actionTypes;
-  payload?: any;
-  error?: any;
+  payload: actionPayload;
+  error?: errorPayload
+}
+
+export type actionPayload = {
+  name: string;
+  value: string;
+}
+
+export type errorPayload = {
+  message: string;
 }
 
 export enum actionTypes {

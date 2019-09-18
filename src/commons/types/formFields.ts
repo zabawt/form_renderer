@@ -1,19 +1,15 @@
-
-type formField<T> = {
+export type formField<T> = {
   type: T;
   value: string;
   label: string;
   name: string;
-  id: string;
 }
 type selectedFormFields<T, U> = T | U;
 
-
+export type stateFields = { [fieldId: string]: formRenderFields };
 export type formFieldInput = formField<fieldTypeInputEnum>;
 export type formFieldSelect = formField<fieldTypeSelectEnum> & optionsForSelect;
-
 export type formRenderFields = selectedFormFields<formFieldInput, formFieldSelect>;
-
 
 type optionsForSelect = {
   options: selectOption[];

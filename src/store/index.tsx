@@ -1,14 +1,15 @@
 import React, { createContext, useReducer, SyntheticEvent } from 'react';
-import { formRenderFields, fieldTypeInputEnum, fieldTypeSelectEnum } from '../commons/types/formFields';
-import { Action } from './../commons/types/actions';
+import { fieldTypeInputEnum, stateFields } from '../commons/types/formFields';
+import { Action, actionTypes } from '../commons/types/actions';
+import { formSubmit } from '../commons/types/form';
 
 interface IAppState {
   valid: boolean;
   submitted: boolean;
-  fields: formRenderFields[];
+  fields: stateFields;
   formId: string;
   formName: string;
-  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void
+  onSubmit: formSubmit
 }
 
 interface IAppContext {
@@ -19,22 +20,32 @@ interface IAppContext {
 export const initialState = {
   formId: "exampleForm01",
   formName: "exampleForm",
-  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => { console.error(event) },
+  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => console.error(event),
   valid: false,
   submitted: false,
-  fields: [{
-    type: fieldTypeInputEnum.text,
-    value: 'text',
-    label: 'text',
-    name: "first",
-    id: "first_id"
-  }]
+  fields: {
+    "first_id": {
+      type: fieldTypeInputEnum.text,
+      value: 'text',
+      label: 'text',
+      name: "first",
+    },
+    "second_id": {
+      type: fieldTypeInputEnum.text,
+      value: 'text2',
+      label: 'text2',
+      name: "first2",
+    }
+  },
 }
 
 export const AppContext = createContext<Partial<IAppContext>>({})
 
 const formReducer = (state: IAppState, action: Action) => {
   switch (action.type) {
+    case actionTypes.UPDATE_FIELD_VALUE:
+      state.fields[action.payload.name].value = action.payload.value;
+      return { ...state }
     default:
       return state;
   }

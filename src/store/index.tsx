@@ -1,11 +1,14 @@
-import React, { createContext, useReducer } from 'react';
-import { formRenderFields } from '../commons/types/formFields';
+import React, { createContext, useReducer, SyntheticEvent } from 'react';
+import { formRenderFields, fieldTypeInputEnum, fieldTypeSelectEnum } from '../commons/types/formFields';
 import { Action } from './../commons/types/actions';
 
 interface IAppState {
   valid: boolean;
   submitted: boolean;
   fields: formRenderFields[];
+  formId: string;
+  formName: string;
+  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void
 }
 
 interface IAppContext {
@@ -14,9 +17,18 @@ interface IAppContext {
 }
 
 export const initialState = {
+  formId: "exampleForm01",
+  formName: "exampleForm",
+  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => { console.error(event) },
   valid: false,
   submitted: false,
-  fields: []
+  fields: [{
+    type: fieldTypeInputEnum.text,
+    value: 'text',
+    label: 'text',
+    name: "first",
+    id: "first_id"
+  }]
 }
 
 export const AppContext = createContext<Partial<IAppContext>>({})

@@ -3,11 +3,14 @@ type formField<T> = {
   type: T;
   value: string;
   label: string;
+  name: string;
+  id: string;
 }
 type selectedFormFields<T, U> = T | U;
 
-export type formFieldInput = formField<fieldTypeInput>;
-export type formFieldSelect = formField<fieldTypeSelect> & optionsForSelect;
+
+export type formFieldInput = formField<fieldTypeInputEnum>;
+export type formFieldSelect = formField<fieldTypeSelectEnum> & optionsForSelect;
 
 export type formRenderFields = selectedFormFields<formFieldInput, formFieldSelect>;
 
@@ -21,13 +24,13 @@ type selectOption = {
   value: string;
 }
 
-const enum fieldTypeInput {
+export enum fieldTypeInputEnum {
   text = "text",
   number = "number",
   tel = "tel",
   email = "email"
 }
 
-const enum fieldTypeSelect {
+export enum fieldTypeSelectEnum {
   select = "select"
 }

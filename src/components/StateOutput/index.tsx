@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoreConsumer } from './../../store'
+import { StoreConsumer } from '../../store'
 
 const StateOutput = () => {
   return <StoreConsumer>{

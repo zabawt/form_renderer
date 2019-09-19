@@ -1,6 +1,6 @@
 import React from 'react';
 import { StoreProvider } from '../../store'
-import StateOutput from './../../components/StateOutput'
+import StateOutput from '../../components/StateOutput'
 import FormRenderer from '../FormRenderer';
 
 //main app container

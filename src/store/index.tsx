@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, SyntheticEvent } from 'react';
+import React, { createContext, useReducer, SyntheticEvent, ReactNode } from 'react';
 import { fieldTypeInputEnum, stateFields } from '../commons/types/formFields';
 import { Action, actionTypes } from '../commons/types/actions';
 import { formSubmit } from '../commons/types/form';
@@ -45,22 +45,30 @@ export const AppContext = createContext<Partial<IAppContext>>({})
 const formReducer = (state: IAppState, action: Action) => {
 
   const newState: IAppState = deepCopy(state); // if You don't believe this, read this https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
-  switch (action.type) {
+  const { type, payload: { name, value } } = action;
+
+  switch (type) {
     case actionTypes.UPDATE_FIELD_VALUE:
-      const { name, value } = action.payload;
       newState.fields[name].value = value;
       return { ...newState }
     default:
-      return state;
+      return newState;
   }
 }
+type storeProviderProp = {
+  children: ReactNode;
+}
 
-export const StoreProvider = ({ children }: any | any[]) => {
+type storeConsumerProp = {
+  children: (value: Partial<IAppContext>) => JSX.Element
+}
+
+export const StoreProvider = ({ children }: storeProviderProp) => {
   const [state, dispatch] = useReducer(formReducer, initialState);
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>
 }
 
-export const StoreConsumer = ({ children }: any | any[]) => {
+export const StoreConsumer = ({ children }: storeConsumerProp) => {
   return <AppContext.Consumer>{children}</AppContext.Consumer>
 }
 

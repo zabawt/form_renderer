@@ -4,7 +4,7 @@ const EMAIL_REGEX = /[A-z]+@[A-z]+\.[A-z]{2,3}/ig
 
 type validationRule = (value: string) => FieldError
 
-const validateLength = (length: number) => (value: string) => value.length === length;
+// const validateLength = (length: number) => (value: string) => value.length === length;
 const validateMinLength = (minLength: number) => (value: string) => value.length >= minLength;
 const validateRegexp = (regexp: RegExp) => (value: string) => regexp.test(value);
 

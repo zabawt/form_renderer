@@ -8,7 +8,6 @@ import { formReducer } from './reducers';
 
 export type appState = {
   valid: boolean;
-  error?: boolean;
   submitted: boolean;
   fields: stateFields;
   formId: string;

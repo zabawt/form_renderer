@@ -3,4 +3,5 @@ export type CommonInputProps = {
   id: string;
   value: string;
   onChange: any;
+  onBlur?: any;
 }

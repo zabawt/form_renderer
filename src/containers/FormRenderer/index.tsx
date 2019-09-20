@@ -28,8 +28,10 @@ class FormRenderer extends React.Component<any, {}> {
 
   //this should be moved out to separate component
   private validateField = (field: string) =>
+
     (validationRules: validation[] | null) =>
       (event: SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => {
+        console.error('triggered', field)
         event.preventDefault();
         if (validationRules) {
           const { value } = event.currentTarget;

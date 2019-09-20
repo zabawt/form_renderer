@@ -17,6 +17,7 @@ export type formRenderFields = formFieldInput | formFieldSelect;
 
 export type requiredSelectOptions = Required<{
   options: selectOptions
+  allowEmpty: boolean;
 }>
 
 export type selectOption = {

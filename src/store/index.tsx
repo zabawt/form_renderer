@@ -65,6 +65,7 @@ const initialState: readOnlyAppState = {
       validation: [validateRequired],
       error: false,
       errorMessage: "",
+      allowEmpty: true,
       options: [{
         text: "IT",
         value: "IT"
@@ -81,6 +82,7 @@ const initialState: readOnlyAppState = {
       validation: [validateRequired],
       error: false,
       errorMessage: "",
+      allowEmpty: true,
       options: [{
         text: "Front-end developer",
         value: "frontenddeveloper"

@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface IValidatorMessageProps {
-  error: any;
+  errorMessage: string;
 }
-const ValidatorMessage = ({ error }: IValidatorMessageProps) => {
-  return <div>{error}</div>
+const ValidatorMessage = ({ errorMessage }: IValidatorMessageProps) => {
+  return <div>{errorMessage}</div>
 }
 
 export default ValidatorMessage;

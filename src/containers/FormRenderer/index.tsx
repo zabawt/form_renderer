@@ -6,6 +6,7 @@ import FormWrapper from '../../components/FormWrapper'
 import { formRenderFields } from '../../commons/types/formFields';
 import { actionTypes } from '../../commons/types/actions';
 import ValidatorMessage from '../../components/ValidatorMessage';
+import { fieldError } from '../../commons/types/validation';
 
 
 class FormRenderer extends React.Component<any, {}> {
@@ -17,11 +18,11 @@ class FormRenderer extends React.Component<any, {}> {
   }
 
   private dispatchFieldUpdate = (field: string) => (value: string) => {
-    return this.context.dispatch({ type: actionTypes.UPDATE_FIELD_VALUE, payload: { name: field, value } });
+    return this.context.dispatch({ type: actionTypes.UPDATE_FIELD_VALUE, name: field, value });
   }
 
-  private dispatchFieldError = (field: string) => (error: any) => {
-    return this.context.dispatch({ type: actionTypes.SET_FIELD_ERROR, payload: { name: field, error } })
+  private dispatchFieldError = (field: string) => (error: fieldError) => {
+    return this.context.dispatch({ type: actionTypes.SET_FIELD_ERROR, name: field, ...error })
   }
   //this should be moved out to separate component
   private validateField = (field: string) => (validationRules: any[] | null) => (event: SyntheticEvent<HTMLInputElement>) => {
@@ -31,20 +32,20 @@ class FormRenderer extends React.Component<any, {}> {
 
     for (let i = 0, len = validationRules.length; i < len; i++) {
       if (!validationRules[i].rule(value)) {
-        this.dispatchFieldError(field)({ valid: false, message: validationRules[i].message })
+        this.dispatchFieldError(field)({ error: true, errorMessage: validationRules[i].message })
       }
     }
   }
 
   private wrapWithLabel = (item: string) =>
-    ({ label, type, value, name, error, validation }: formRenderFields) =>
+    ({ label, type, value, name, error, errorMessage, validation }: formRenderFields) =>
       <FieldLabel htmlFor={name} label={label} key={item}>
         <FieldFactory type={type} value={value} id={item} name={name} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} />
-        {this.getErrorMessages(error)}
+        {this.getErrorMessages({ error, errorMessage })}
       </FieldLabel>
 
-  private getErrorMessages = (error: any) => {
-    return error && <ValidatorMessage error={error} />
+  private getErrorMessages = ({ error, errorMessage }: fieldError) => {
+    return error && <ValidatorMessage errorMessage={errorMessage} />
   }
 
   render() {

@@ -1,6 +1,6 @@
 export type fieldError = {
-  valid: boolean;
-  message?: string;
+  error: boolean;
+  errorMessage: string;
 }
 
 export type validation = {

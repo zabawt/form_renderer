@@ -1,11 +1,12 @@
 import React, { createContext, useReducer, SyntheticEvent, ReactNode } from 'react';
 import { fieldTypeInputEnum, stateFields } from '../commons/types/formFields';
-import { Action, actionTypes } from '../commons/types/actions';
+import { actions } from '../commons/types/actions';
 import { formSubmit } from '../commons/types/form';
-import { deepCopy } from '../commons/helpers/deepCopy';
 import { validateRequired } from './../commons/validators';
+import { formValidityMiddleWare, deepCopyMiddleWare } from './middlewares';
+import { formReducer } from './reducers';
 
-type appState = {
+export type appState = {
   valid: boolean;
   submitted: boolean;
   fields: stateFields;
@@ -13,12 +14,13 @@ type appState = {
   formName: string;
   onSubmit: formSubmit
 }
+export const AppContext = createContext<Partial<IAppContext>>({})
 //State is readonly so there are smaller chances somebody will accidentaly mutate it
 type readOnlyAppState = Readonly<appState>;
 
 interface IAppContext {
   state: readOnlyAppState;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<actions>;
 }
 
 const initialState: readOnlyAppState = {
@@ -33,7 +35,7 @@ const initialState: readOnlyAppState = {
       value: '',
       label: 'First name',
       name: "firstName",
-      validation: [],
+      validation: [{ rule: validateRequired, message: "this field is required" }],
       error: false,
       errorMessage: ""
     },
@@ -49,24 +51,7 @@ const initialState: readOnlyAppState = {
   },
 }
 
-export const AppContext = createContext<Partial<IAppContext>>({})
 
-const formReducer = (state: readOnlyAppState, action: Action) => {
-
-  const newState: readOnlyAppState = deepCopy(state); // if You don't believe this, read this https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
-  const { type, payload: { name, value } } = action;
-
-  switch (type) {
-    case actionTypes.UPDATE_FIELD_VALUE:
-      newState.fields[name].value = value;
-      return { ...newState }
-    case actionTypes.SET_FIELD_ERROR:
-      console.error(action);
-      return newState;
-    default:
-      return newState;
-  }
-}
 type storeProviderProp = {
   children: ReactNode;
 }
@@ -76,7 +61,8 @@ type storeConsumerProp = {
 }
 
 export const StoreProvider = ({ children }: storeProviderProp) => {
-  const [state, dispatch] = useReducer(formReducer, initialState);
+  const formReducerWithMiddlewares = formReducer(formValidityMiddleWare, deepCopyMiddleWare);
+  const [state, dispatch] = useReducer(formReducerWithMiddlewares, initialState);
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>
 }
 

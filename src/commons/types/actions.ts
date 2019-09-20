@@ -1,17 +1,22 @@
-export type Action = {
+interface IAction {
   type: actionTypes;
-  payload: actionPayload;
-  error?: errorPayload
+  value: string | never;
+  error: boolean | never;
+  errorMessage: string | never;
 }
 
-export type actionPayload = {
+export interface IUpdateFieldAction extends IAction {
   name: string;
   value: string;
 }
 
-export type errorPayload = {
-  message: string;
+export interface IFieldErrorAction extends IAction {
+  name: string;
+  error: boolean;
+  errorMessage: string;
 }
+
+export type actions = (IUpdateFieldAction | IFieldErrorAction)
 
 export enum actionTypes {
   UPDATE_FIELD_VALUE = "UPDATE_FIELD_VALUE",

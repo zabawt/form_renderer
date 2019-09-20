@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, SyntheticEvent, ReactNode } from 'react';
-import { fieldTypeInputEnum, stateFields } from '../commons/types/formFields';
+import { fieldTypeInputEnum, stateFields, fieldTypeSelectEnum } from '../commons/types/formFields';
 import { actions } from '../commons/types/actions';
 import { formSubmit } from '../commons/types/form';
-import { validateRequired } from '../commons/validation/validators';
+import { validateRequired, validateEmail } from '../commons/validation/validators';
 import { formValidityMiddleWare } from './middlewares';
 import { formReducer } from './reducers';
 
@@ -30,27 +30,51 @@ const initialState: readOnlyAppState = {
   valid: false,
   submitted: false,
   fields: {
-    "first_name": {
+    "name": {
       type: fieldTypeInputEnum.text,
       value: '',
-      label: 'First name',
-      name: "firstName",
+      label: 'Name',
+      name: "_name",
       validation: [validateRequired],
       error: false,
       errorMessage: ""
     },
-    "last_name": {
+    "nickname": {
       type: fieldTypeInputEnum.text,
       value: '',
-      label: 'Last name',
-      name: "lastName",
+      label: 'Nick name',
+      name: "_nickname",
       validation: [validateRequired],
       error: false,
       errorMessage: ""
+    },
+    "email": {
+      type: fieldTypeInputEnum.email,
+      value: "",
+      label: "Email",
+      name: "_email",
+      validation: [validateRequired, validateEmail],
+      error: false,
+      errorMessage: "",
+    },
+    "field": {
+      type: fieldTypeSelectEnum.select,
+      value: "",
+      label: "Field",
+      name: "_field",
+      validation: [validateRequired],
+      error: false,
+      errorMessage: "",
+      options: [{
+        text: "IT",
+        value: "IT"
+      },
+      { text: "Product", value: "Product" },
+      { text: "Content", value: "Content" }
+      ]
     }
   },
 }
-
 
 type storeProviderProp = {
   children: ReactNode;
@@ -69,4 +93,3 @@ export const StoreProvider = ({ children }: storeProviderProp) => {
 export const StoreConsumer = ({ children }: storeConsumerProp) => {
   return <AppContext.Consumer>{children}</AppContext.Consumer>
 }
-

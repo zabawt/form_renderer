@@ -1,7 +1,7 @@
 import { validation } from "./validation";
 
 export type formField<T> = {
-  type: T;
+  type: Partial<T>;
   value: string;
   label: string;
   name: string;
@@ -10,21 +10,21 @@ export type formField<T> = {
   errorMessage: string;
 }
 
-type selectedFormFields<T, U> = T | U;
-
 export type stateFields = { [fieldId: string]: formRenderFields };
 export type formFieldInput = formField<fieldTypeInputEnum>;
-export type formFieldSelect = formField<fieldTypeSelectEnum & optionsForSelect>
-export type formRenderFields = selectedFormFields<formFieldInput, formFieldSelect>;
+export type formFieldSelect = formField<fieldTypeSelectEnum> & requiredSelectOptions;
+export type formRenderFields = formFieldInput | formFieldSelect;
 
-type optionsForSelect = {
-  options: selectOption[];
-}
+type requiredSelectOptions = Required<{
+  options: selectOptions
+}>
 
 type selectOption = {
   text: string;
   value: string;
 }
+
+type selectOptions = selectOption[];
 
 export enum fieldTypeInputEnum {
   text = "text",

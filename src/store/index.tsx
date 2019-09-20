@@ -2,12 +2,13 @@ import React, { createContext, useReducer, SyntheticEvent, ReactNode } from 'rea
 import { fieldTypeInputEnum, stateFields } from '../commons/types/formFields';
 import { actions } from '../commons/types/actions';
 import { formSubmit } from '../commons/types/form';
-import { validateRequired } from './../commons/validators';
-import { formValidityMiddleWare, deepCopyMiddleWare } from './middlewares';
+import { validateRequired } from '../commons/validation/validators';
+import { formValidityMiddleWare } from './middlewares';
 import { formReducer } from './reducers';
 
 export type appState = {
   valid: boolean;
+  error?: boolean;
   submitted: boolean;
   fields: stateFields;
   formId: string;
@@ -35,7 +36,7 @@ const initialState: readOnlyAppState = {
       value: '',
       label: 'First name',
       name: "firstName",
-      validation: [{ rule: validateRequired, message: "this field is required" }],
+      validation: [validateRequired],
       error: false,
       errorMessage: ""
     },
@@ -44,7 +45,7 @@ const initialState: readOnlyAppState = {
       value: '',
       label: 'Last name',
       name: "lastName",
-      validation: [{ rule: validateRequired, message: "this field is required" }],
+      validation: [validateRequired],
       error: false,
       errorMessage: ""
     }
@@ -61,7 +62,7 @@ type storeConsumerProp = {
 }
 
 export const StoreProvider = ({ children }: storeProviderProp) => {
-  const formReducerWithMiddlewares = formReducer(formValidityMiddleWare, deepCopyMiddleWare);
+  const formReducerWithMiddlewares = formReducer(formValidityMiddleWare);
   const [state, dispatch] = useReducer(formReducerWithMiddlewares, initialState);
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>
 }

@@ -6,7 +6,8 @@ import FormWrapper from '../../components/FormWrapper'
 import { formRenderFields } from '../../commons/types/formFields';
 import { actionTypes } from '../../commons/types/actions';
 import ValidatorMessage from '../../components/ValidatorMessage';
-import { fieldError } from '../../commons/types/validation';
+import { fieldError, validation } from '../../commons/types/validation';
+import { validateRuleset } from '../../commons/validation/validators';
 
 
 class FormRenderer extends React.Component<any, {}> {
@@ -21,21 +22,20 @@ class FormRenderer extends React.Component<any, {}> {
     return this.context.dispatch({ type: actionTypes.UPDATE_FIELD_VALUE, name: field, value });
   }
 
-  private dispatchFieldError = (field: string) => (error: fieldError) => {
+  private dispatchFieldError = (field: string, error: fieldError) => {
     return this.context.dispatch({ type: actionTypes.SET_FIELD_ERROR, name: field, ...error })
   }
-  //this should be moved out to separate component
-  private validateField = (field: string) => (validationRules: any[] | null) => (event: SyntheticEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (!validationRules) return;
-    const { value } = event.currentTarget;
 
-    for (let i = 0, len = validationRules.length; i < len; i++) {
-      if (!validationRules[i].rule(value)) {
-        this.dispatchFieldError(field)({ error: true, errorMessage: validationRules[i].message })
+  //this should be moved out to separate component
+  private validateField = (field: string) =>
+    (validationRules: validation[] | null) =>
+      (event: SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => {
+        event.preventDefault();
+        if (validationRules) {
+          const { value } = event.currentTarget;
+          this.dispatchFieldError(field, validateRuleset(validationRules, value));
+        }
       }
-    }
-  }
 
   private wrapWithLabel = (item: string) =>
     ({ label, type, value, name, error, errorMessage, validation }: formRenderFields) =>

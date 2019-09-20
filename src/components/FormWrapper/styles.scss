@@ -1,0 +1,11 @@
+@import '../../commons/assets/scss/variables/colors';
+@import '../../commons/assets/scss/variables/sizing';
+
+.formwrapper__form {
+  background-color: $formBg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid $borders;
+  padding: $large-spacing;
+}

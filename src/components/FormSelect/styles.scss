@@ -1,0 +1,10 @@
+@import './../../commons/assets/scss/partials/input';
+
+.form__select {
+  @extend %form-field;
+  -webkit-appearance: none;
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUNjaaZ5LY8gTRUG8Dats8UCd1MUrVQUyRZc3CyhdbRsM2yfmL');
+  background-size: contain;
+  background-position:  100%;
+  background-repeat: no-repeat;
+}

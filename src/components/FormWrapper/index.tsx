@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { formSubmit } from '../../commons/types/form';
+import './styles.scss';
 
 interface IFormWrapperProps {
   name: string;
@@ -8,9 +9,8 @@ interface IFormWrapperProps {
   children: ReactNode;
 }
 
-const FormWrapper = (props: IFormWrapperProps) => {
-  const { children, ...rest } = props;
-  return <form {...rest}>{props.children}</form>
+const FormWrapper = ({ children, ...rest }: IFormWrapperProps) => {
+  return <form {...rest} className="formwrapper__form">{children}</form>
 }
 
 export default FormWrapper;

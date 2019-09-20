@@ -8,6 +8,7 @@ import { actionTypes } from '../../commons/types/actions';
 import ValidatorMessage from '../../components/ValidatorMessage';
 import { fieldError, validation } from '../../commons/types/validation';
 import { validateRuleset } from '../../commons/validation/validators';
+import FieldWrapper from '../../components/FieldWrapper';
 
 
 class FormRenderer extends React.Component<any, {}> {
@@ -28,23 +29,19 @@ class FormRenderer extends React.Component<any, {}> {
 
   //this should be moved out to separate component
   private validateField = (field: string) =>
-
     (validationRules: validation[] | null) =>
       (event: SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => {
-        console.error('triggered', field)
         event.preventDefault();
-        if (validationRules) {
-          const { value } = event.currentTarget;
-          this.dispatchFieldError(field, validateRuleset(validationRules, value));
-        }
+        if (validationRules) this.dispatchFieldError(field, validateRuleset(validationRules, event.currentTarget.value));
       }
 
   private wrapWithLabel = (item: string) =>
     ({ label, type, name, validation, error, errorMessage, ...rest }: formRenderFields) =>
-      <FieldLabel htmlFor={name} label={label} key={item}>
-        <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} {...rest} />
-        {this.getErrorMessages({ error, errorMessage })}
-      </FieldLabel>
+      <FieldWrapper>
+        <FieldLabel htmlFor={name} label={label} key={item}>
+          <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} {...rest} />
+          {this.getErrorMessages({ error, errorMessage })}
+        </FieldLabel></FieldWrapper>
 
   private getErrorMessages = ({ error, errorMessage }: fieldError) => {
     return error && <ValidatorMessage errorMessage={errorMessage} />

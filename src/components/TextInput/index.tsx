@@ -7,7 +7,7 @@ interface ICommonInputProps {
 }
 
 const TextInput = (props: ICommonInputProps) => {
-  return <input type="text" {...props} />
+  return <input type="text" {...props} className="form__input" />
 }
 
 export default TextInput;

@@ -1,0 +1,9 @@
+@import '../../commons/assets/scss/variables/colors';
+@import '../../commons/assets/scss/variables/sizing';
+
+.form__error {
+  color: $error;
+  font-size: $min-spacing; 
+  position: absolute;
+  bottom: $xs-spacing;
+}

@@ -15,16 +15,16 @@ export type formFieldInput = formField<fieldTypeInputEnum>;
 export type formFieldSelect = formField<fieldTypeSelectEnum> & requiredSelectOptions;
 export type formRenderFields = formFieldInput | formFieldSelect;
 
-type requiredSelectOptions = Required<{
+export type requiredSelectOptions = Required<{
   options: selectOptions
 }>
 
-type selectOption = {
+export type selectOption = {
   text: string;
   value: string;
 }
 
-type selectOptions = selectOption[];
+export type selectOptions = selectOption[];
 
 export enum fieldTypeInputEnum {
   text = "text",

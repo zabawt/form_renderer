@@ -1,11 +1,14 @@
 import React, { SyntheticEvent } from 'react';
-import { fieldTypeInputEnum, formRenderFields } from '../../commons/types/formFields';
+import { fieldTypeInputEnum, fieldTypeSelectEnum, selectOptions } from '../../commons/types/formFields';
+import TextInput from '../TextInput';
+import FormSelect from '../FormSelect';
 
-type fieldFactoryProps = { id: string, onChange: any, onBlur: any } & Pick<formRenderFields, "type" | "value" | "name">;
 type onChangeEvent = SyntheticEvent<HTMLInputElement | HTMLSelectElement>;
 
+type fieldFactoryProps = { id: string, onChange: any, onBlur: any, type: string, name: string, value: string, options?: selectOptions }
+
 const FieldFactory = (props: fieldFactoryProps) => {
-  const { type, onChange, ...rest } = props;
+  const { type, options, onChange, ...rest } = props;
 
   const handleOnChange = (event: onChangeEvent) => {
     event.preventDefault();
@@ -13,9 +16,12 @@ const FieldFactory = (props: fieldFactoryProps) => {
   }
 
   switch (type) {
+    case fieldTypeSelectEnum.select:
+      return <FormSelect onChange={handleOnChange} options={options} {...rest} />
+
     case fieldTypeInputEnum.text:
     default:
-      return <input {...rest} type={fieldTypeInputEnum.text} onChange={handleOnChange} />
+      return <TextInput onChange={handleOnChange} {...rest} />;
   }
 }
 

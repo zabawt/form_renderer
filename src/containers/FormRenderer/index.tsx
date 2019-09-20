@@ -38,9 +38,9 @@ class FormRenderer extends React.Component<any, {}> {
       }
 
   private wrapWithLabel = (item: string) =>
-    ({ label, type, value, name, error, errorMessage, validation }: formRenderFields) =>
+    ({ label, type, name, validation, error, errorMessage, ...rest }: formRenderFields) =>
       <FieldLabel htmlFor={name} label={label} key={item}>
-        <FieldFactory type={type} value={value} id={item} name={name} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} />
+        <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} {...rest} />
         {this.getErrorMessages({ error, errorMessage })}
       </FieldLabel>
 

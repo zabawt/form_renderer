@@ -72,6 +72,22 @@ const initialState: readOnlyAppState = {
       { text: "Product", value: "Product" },
       { text: "Content", value: "Content" }
       ]
+    },
+    "position": {
+      type: fieldTypeSelectEnum.select,
+      value: "",
+      label: "Position",
+      name: "_position",
+      validation: [validateRequired],
+      error: false,
+      errorMessage: "",
+      options: [{
+        text: "Front-end developer",
+        value: "frontenddeveloper"
+      },
+      { text: "Back-end developer", value: "backenddeveloper" },
+      { text: "Devops", value: "devops" }
+      ]
     }
   },
 }

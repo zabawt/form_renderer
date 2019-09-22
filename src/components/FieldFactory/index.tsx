@@ -15,10 +15,9 @@ type fieldFactoryProps = {
   options?: selectOptions,
   dynamicValue?: string;
 }
-
+// Here You can add another type of fields to be returned and handled
 const FieldFactory = (props: fieldFactoryProps) => {
   const { type, options, onChange, dynamicValue, ...rest } = props;
-
   const handleOnChange = (event: onChangeEvent) => {
     event.preventDefault();
     props.onChange(event.currentTarget.value);

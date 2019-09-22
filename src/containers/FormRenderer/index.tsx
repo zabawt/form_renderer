@@ -9,6 +9,8 @@ import ValidatorMessage from '../../components/ValidatorMessage';
 import { fieldError, validation } from '../../commons/types/validation';
 import { validateRuleset } from '../../commons/validation/validators';
 import FieldWrapper from '../../components/FieldWrapper';
+import Submit from '../../components/Submit';
+import { formSubmit } from '../../commons/types/form';
 
 
 class FormRenderer extends React.Component<any, {}> {
@@ -35,6 +37,21 @@ class FormRenderer extends React.Component<any, {}> {
         if (validationRules) this.dispatchFieldError(field, validateRuleset(validationRules, event.currentTarget.value));
       }
 
+  private validateForm = (): boolean => {
+    let validationResult = true;
+    const { fields } = this.context.state;
+    Object.keys(fields).map((field) => {
+      const { validation, value } = fields[field];
+      let fieldValidation = validateRuleset(validation, value);
+      console.error(fieldValidation)
+      if (fieldValidation.error) {
+        validationResult = false;
+      }
+      this.dispatchFieldError(field, fieldValidation)
+    });
+    return validationResult;
+  }
+
   private getDynamicFieldValue = (field: string | undefined) => {
     return field ? this.context.state.fields[field] && this.context.state.fields[field].value : undefined;
   }
@@ -51,9 +68,24 @@ class FormRenderer extends React.Component<any, {}> {
     return error && <ValidatorMessage errorMessage={errorMessage} />
   }
 
+  private handleFormSubmit: formSubmit = (event) => {
+    const { dispatch } = this.context;
+    event.preventDefault()
+    if (this.validateForm()) {
+      dispatch({ type: actionTypes.SUBMIT_FORM, name: "" })
+    }
+  }
+
   render() {
-    const { formName, formId, onSubmit } = this.context.state;
-    return <FormWrapper name={formName} id={formId} onSubmit={onSubmit}>{this.getFields()}</FormWrapper>
+    const { formName, formId, submitted } = this.context.state;
+    if (!submitted) {
+      return <FormWrapper name={formName} id={formId} onSubmit={this.handleFormSubmit}>
+        {this.getFields()}
+        <Submit />
+      </FormWrapper>
+    } else {
+      return <div>Form submitted</div>
+    }
   }
 }
 

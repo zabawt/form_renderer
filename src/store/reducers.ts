@@ -13,9 +13,10 @@ export const formReducer = (...middlewares: reducerMiddleWare[]) => (state: appS
     case actionTypes.UPDATE_FIELD_VALUE:
       copiedState.fields[name].value = value;
       break;
-
+    case actionTypes.SUBMIT_FORM:
+      copiedState.submitted = true;
+      break;
     case actionTypes.SET_FIELD_ERROR:
-      copiedState.valid = false;
       copiedState.fields[name].error = error;
       copiedState.fields[name].errorMessage = errorMessage;
       break;

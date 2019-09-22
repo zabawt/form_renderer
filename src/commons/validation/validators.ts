@@ -1,6 +1,6 @@
 import { REQUIRED_FIELD, INVALID_EMAIL } from "./errorMessages";
 
-const EMAIL_REGEX = /[A-z]+@[A-z]+\.[A-z]{2,3}/ig
+const EMAIL_REGEX = /[\w]+@[\w]+\.[\w]{2,4}/gi;
 
 class FieldError {
   error: boolean;
@@ -31,10 +31,10 @@ export const validateEmail: validationRule = (value) => {
   return createError(!validateRegexp(EMAIL_REGEX)(value), INVALID_EMAIL)
 }
 
-export const validateForm = () => { }
-
+//We can add few validation rules per field, they get validated here
 export const validateRuleset = (validationRules: validationRule[], value: string): FieldError => {
   let fieldError = createError(false, "");
+  // for loop is most effcient for complex rulesets
   for (let i = 0, len = validationRules.length; i < len; i++) {
     fieldError = validationRules[i](value);
     if (fieldError.error) break;

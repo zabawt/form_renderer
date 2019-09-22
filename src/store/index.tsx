@@ -1,18 +1,15 @@
-import React, { createContext, useReducer, SyntheticEvent, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 import { fieldTypeInputEnum, stateFields, fieldTypeSelectEnum } from '../commons/types/formFields';
 import { actions } from '../commons/types/actions';
-import { formSubmit } from '../commons/types/form';
 import { validateRequired, validateEmail } from '../commons/validation/validators';
 import { formValidityMiddleWare } from './middlewares';
 import { formReducer } from './reducers';
 
 export type appState = {
-  valid: boolean;
   submitted: boolean;
   fields: stateFields;
   formId: string;
   formName: string;
-  onSubmit: formSubmit
 }
 export const AppContext = createContext<Partial<IAppContext>>({})
 //State is readonly so there are smaller chances somebody will accidentaly mutate it
@@ -26,8 +23,6 @@ interface IAppContext {
 const initialState: readOnlyAppState = {
   formId: "exampleForm01",
   formName: "exampleForm",
-  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => console.error(event),
-  valid: false,
   submitted: false,
   fields: {
     "name": {

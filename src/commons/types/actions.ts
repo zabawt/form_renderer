@@ -16,7 +16,12 @@ export interface IFieldErrorAction extends IAction {
   errorMessage: string;
 }
 
-export type actions = (IUpdateFieldAction | IFieldErrorAction)
+export interface ISubmitFormAction extends IAction {
+  name: string;
+  submitted: boolean;
+}
+
+export type actions = (IUpdateFieldAction | IFieldErrorAction | ISubmitFormAction)
 
 export enum actionTypes {
   UPDATE_FIELD_VALUE = "UPDATE_FIELD_VALUE",

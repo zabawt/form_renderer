@@ -41,8 +41,8 @@ class FormRenderer extends React.Component<any, {}> {
 
   private wrapWithLabel = (item: string) =>
     ({ label, type, name, validation, error, errorMessage, dynamicValueField, ...rest }: formRenderFields) =>
-      <FieldWrapper>
-        <FieldLabel htmlFor={name} label={label} key={item} />
+      <FieldWrapper key={item}>
+        <FieldLabel htmlFor={name} label={label} />
         <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} dynamicValue={this.getDynamicFieldValue(dynamicValueField)}  {...rest} />
         {this.getErrorMessages({ error, errorMessage })}
       </FieldWrapper>

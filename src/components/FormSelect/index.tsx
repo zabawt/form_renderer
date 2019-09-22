@@ -13,9 +13,10 @@ const FormSelect = ({ options, allowEmpty, dynamicValue, ...rest }: SelectTypePr
   return <select {...rest} className="form__select">
     {allowEmpty && <option></option>}
     {options && options.map(({ value, text, mappedValues }: selectOption, index: number) => {
-      if (dynamicValue == undefined || (mappedValues && mappedValues.includes(dynamicValue))) {
+      if (dynamicValue === undefined || (mappedValues && mappedValues.includes(dynamicValue))) {
         return <option value={value} key={`${value}_${index}`}>{text}</option>
       }
+      return null;
     })}
   </select>
 

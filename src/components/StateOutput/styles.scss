@@ -1,0 +1,21 @@
+@import '../../commons/assets/scss/variables/colors';
+@import '../../commons/assets/scss/variables/sizing';
+
+.state__output {
+  background: rgba(0,0,0,.6);
+  border: 1px solid rgba(0,0,0,.3);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 70%;
+  color: #fff;
+  padding: $min-spacing;
+  overflow-x: scroll;
+  max-height: 80vh;
+}
+
+@media screen and (max-width: 765px) {
+  .state__output {
+    font-size: 80%;
+    max-height: none;
+    overflow-x: hidden;
+   }
+}

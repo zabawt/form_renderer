@@ -1,14 +1,17 @@
 import React from 'react';
 import { StoreProvider } from '../../store'
 import StateOutput from '../../components/StateOutput'
+import FlexWrapper from './../../components/FlexWrapper'
 import FormRenderer from '../FormRenderer';
 import './../../commons/assets/scss/index.scss'
 
 //main app container
 const App = () => {
   return <StoreProvider>
-    <FormRenderer />
-    <StateOutput />
+    <FlexWrapper>
+      <FormRenderer />
+      <StateOutput />
+    </FlexWrapper>
   </StoreProvider>
 }
 

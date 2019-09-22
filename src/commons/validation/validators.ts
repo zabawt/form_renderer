@@ -1,6 +1,6 @@
 import { REQUIRED_FIELD, INVALID_EMAIL } from "./errorMessages";
 
-const EMAIL_REGEX = /[\w]+@[\w]+\.[\w]{2,4}/gi;
+const EMAIL_REGEX = /[\w]+@[\w]+\.[\w]{2,4}/i;
 
 class FieldError {
   error: boolean;

@@ -5,10 +5,19 @@ import FormSelect from '../FormSelect';
 
 type onChangeEvent = SyntheticEvent<HTMLInputElement | HTMLSelectElement>;
 
-type fieldFactoryProps = { id: string, onChange: any, onBlur: any, type: string, name: string, value: string, options?: selectOptions }
+type fieldFactoryProps = {
+  id: string,
+  onChange: Function,
+  onBlur: Function,
+  type: string,
+  name: string,
+  value: string,
+  options?: selectOptions,
+  dynamicValue?: string;
+}
 
 const FieldFactory = (props: fieldFactoryProps) => {
-  const { type, options, onChange, ...rest } = props;
+  const { type, options, onChange, dynamicValue, ...rest } = props;
 
   const handleOnChange = (event: onChangeEvent) => {
     event.preventDefault();
@@ -17,7 +26,7 @@ const FieldFactory = (props: fieldFactoryProps) => {
 
   switch (type) {
     case fieldTypeSelectEnum.select:
-      return <FormSelect onChange={handleOnChange} options={options} {...rest} />
+      return <FormSelect onChange={handleOnChange} dynamicValue={dynamicValue} options={options} {...rest} />
 
     case fieldTypeInputEnum.text:
     default:

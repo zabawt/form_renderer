@@ -35,13 +35,17 @@ class FormRenderer extends React.Component<any, {}> {
         if (validationRules) this.dispatchFieldError(field, validateRuleset(validationRules, event.currentTarget.value));
       }
 
+  private getDynamicFieldValue = (field: string | undefined) => {
+    return field ? this.context.state.fields[field] && this.context.state.fields[field].value : undefined;
+  }
+
   private wrapWithLabel = (item: string) =>
-    ({ label, type, name, validation, error, errorMessage, ...rest }: formRenderFields) =>
+    ({ label, type, name, validation, error, errorMessage, dynamicValueField, ...rest }: formRenderFields) =>
       <FieldWrapper>
-        <FieldLabel htmlFor={name} label={label} key={item}>
-          <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} {...rest} />
-          {this.getErrorMessages({ error, errorMessage })}
-        </FieldLabel></FieldWrapper>
+        <FieldLabel htmlFor={name} label={label} key={item} />
+        <FieldFactory name={name} type={type} id={item} onChange={this.dispatchFieldUpdate(item)} onBlur={this.validateField(item)(validation)} dynamicValue={this.getDynamicFieldValue(dynamicValueField)}  {...rest} />
+        {this.getErrorMessages({ error, errorMessage })}
+      </FieldWrapper>
 
   private getErrorMessages = ({ error, errorMessage }: fieldError) => {
     return error && <ValidatorMessage errorMessage={errorMessage} />

@@ -6,13 +6,16 @@ import './styles.scss';
 type SelectTypeProps = CommonInputProps & {
   options: selectOptions | undefined;
   allowEmpty?: boolean;
+  dynamicValue?: string | undefined;
 }
 
-const FormSelect = ({ options, allowEmpty, ...rest }: SelectTypeProps) => {
+const FormSelect = ({ options, allowEmpty, dynamicValue, ...rest }: SelectTypeProps) => {
   return <select {...rest} className="form__select">
     {allowEmpty && <option></option>}
-    {options && options.map(({ value, text }: selectOption, index: number) => {
-      return <option value={value} key={`${value}_${index}`}>{text}</option>
+    {options && options.map(({ value, text, mappedValues }: selectOption, index: number) => {
+      if (dynamicValue == undefined || (mappedValues && mappedValues.includes(dynamicValue))) {
+        return <option value={value} key={`${value}_${index}`}>{text}</option>
+      }
     })}
   </select>
 

@@ -83,12 +83,20 @@ const initialState: readOnlyAppState = {
       error: false,
       errorMessage: "",
       allowEmpty: true,
+      dynamicValueField: "field",
       options: [{
         text: "Front-end developer",
-        value: "frontenddeveloper"
+        value: "frontenddeveloper",
+        mappedValues: ["IT"]
       },
-      { text: "Back-end developer", value: "backenddeveloper" },
-      { text: "Devops", value: "devops" }
+      { text: "Back-end developer", value: "backenddeveloper", mappedValues: ["IT"] },
+      { text: "DevOps", value: "devops", mappedValues: ["IT"] },
+      { text: "Webmaster", value: "devops", mappedValues: ["IT"] },
+      { text: "Product owner", value: "po", mappedValues: ["Product"] },
+      { text: "UX Designer", value: "ux", mappedValues: ["Product"] },
+      { text: "UI Designer", value: "ui", mappedValues: ["Product"] },
+      { text: "Junior Copywriter", value: "juniorcopywriter", mappedValues: ["Content"] },
+      { text: "Senior Copywriter", value: "seniorcopywriter", mappedValues: ["Content"] }
       ]
     }
   },

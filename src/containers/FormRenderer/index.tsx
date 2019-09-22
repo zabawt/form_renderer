@@ -42,8 +42,7 @@ class FormRenderer extends React.Component<any, {}> {
     const { fields } = this.context.state;
     Object.keys(fields).map((field) => {
       const { validation, value } = fields[field];
-      let fieldValidation = validateRuleset(validation, value);
-      console.error(fieldValidation)
+      const fieldValidation = validateRuleset(validation, value);
       if (fieldValidation.error) {
         validationResult = false;
       }
